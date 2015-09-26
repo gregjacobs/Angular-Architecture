@@ -1,0 +1,12 @@
+# Site settings
+title: Angular Guides
+email: greg@greg-jacobs.com
+description: > # this means to ignore newlines until "baseurl:"
+  Guides about AngularJS development, architecture, testing, and general best
+  practices developed over the years.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://gregjacobs.github.io/Angular-Guides" # the base hostname & protocol for your site
+github_username: gregjacobs
+
+# Build settings
+markdown: kramdown
