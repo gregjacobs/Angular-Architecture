@@ -10,59 +10,52 @@ for more details on this architecture.)
 
 Components are implemented in Angular 1.x as directives, usually element 
 directives. Many testing guides recommend that you simply check properties of 
-the `$scope` (or properties of the controller in Angular 1.3+ using 
-`bindToController`) for your assertions/expectations in tests, but this is not 
-enough because that doesn't cover:
+the `$scope` (or properties of the controller) for your assertions/expectations 
+in tests, but this is not enough. Think of the following scenarios:
 
-1. If the scope property is used as part of an `ng-if` or `ng-show` expression,
-   for example.
-2. If the scope property name is spelled correctly in the HTML template, which 
-   would break the link to the data value silently (until hopefully your QA 
-   testers notice, if you have some, or otherwise your users notice).
-
-
-
-WIP:
-
-1. It's possible that your scope property for a piece of text is correct, but 
-   that it didn't make it to the DOM because of a misspelling in the HTML 
-   template.
+1. It's possible that your scope property for say, a piece of text is correct, 
+   but that it didn't make it to the DOM because of a property misspelling in 
+   the HTML template.
 2. It's possible that your scope property for a piece of text is correct, but it 
-   is accidentally (and inadvertently) hidden by an `ng-if` or an `ng-show` 
-   above it (and one you didn't think to check).
-3. It's possible that your expressions inside `ng-if`s, `ng-show`s, `ng-repeat`s,
-   etc. simply aren't correct, so your scope properties are simply not going to
-   display to the user correctly.
+   is accidentally (and inadvertently) removed by an `ng-if` above it (and one 
+   you didn't think to check).
+3. It's possible that your expression inside an `ng-if`, `ng-show`, `ng-repeat`,
+   etc. simply isn't correct, so your component is simply not going to display 
+   to the user correctly.
+4. It's possible that you used the bind once syntax (`::`) on something in your
+   template that you didn't mean to, and your value is not getting updated to
+   display to the user when something changes.
    
-The solution to all these problems: Instead of asserting against `$scope`, 
+**In all of these scenarios**, your tests may have passed because your `$scope` 
+properties looked good, but your component did not display correctly to the 
+user. The solution to all these problems? Instead of asserting against `$scope`, 
 assert against the DOM.
-
-
 
 Let me walk you through an example: A dropdown component.
 
 
 ## The Dropdown Component
 
-Here we'll have a simple dropdown component. This will be a simple replacement 
-for the HTML `<select>` element. It's definition looks something like this:
+Here we'll have a simple dropdown component from the "todo" example app. This 
+is a simple replacement for the HTML `<select>` element, but will help to 
+demonstrate the concepts. It's definition looks something like this:
 
-dropdown.js
+*todo-dropdown.js*
 
 {% highlight javascript %}
-angular.module( 'myApp' ).directive( 'my-dropdown', function() {
+angular.module( 'myApp' ).directive( 'myDropdown', function() {
     'use strict';
     
     return {
         restrict : 'E',  // element directive
         
-        scope : {        // always use an isolate scope - see [Components](/architecture/components/) article
+        scope : {        // always use an isolate scope - see "Components" article
             items        : '=',
             selectedItem : '=',
             onItemSelect : '&'
         },
         
-        templateUrl  : 'components/dropdown/dropdown.html',
+        templateUrl  : 'components/dropdown/todo-dropdown.html',
         controller   : 'MyDropdownCtrl',
         controllerAs : 'ctrl'
     };
@@ -77,6 +70,10 @@ angular.module( 'myApp' ).controller( 'MyDropdownCtrl', [ '$scope', function( $s
     this.selectItem = selectItem;
     
     
+    /**
+     * Called when an item is clicked by the user, selects the item 
+     * and notifies listeners of `on-item-select`.
+     */
     function selectItem( item ) {
         $scope.selectedItem = item;
         $scope.onItemSelect( { $item: item } );
@@ -86,7 +83,7 @@ angular.module( 'myApp' ).controller( 'MyDropdownCtrl', [ '$scope', function( $s
 {% endhighlight %}
 
 
-dropdown.html 
+*todo-dropdown.html*
 
 {% highlight html %}
 <div class="dropdown__selected-item">{% raw %}{{ selectedItem.text }}{% endraw %}</div>
@@ -96,6 +93,14 @@ dropdown.html
     </div>
 </div>
 {% endhighlight %}
+
+
+## Testing This Component
+
+In order to test this component, we want to test it through its *public 
+interface*. In the case of an Angular component, this is 
+
+
 
 
 
@@ -112,3 +117,24 @@ element `ng-if`
 
 
 ## Why It's Not Enough To Test The $scope
+
+TODO: Example of a scope property being correct, but the expression in an
+ng-if is incorrect
+ 
+ 
+## How to test
+
+First, we want to create an instance of the component, so that we can test it
+through its public interface. This is a common theme in unit testing: test 
+through the public interface because it doesn't matter to clients if the 
+"behind-the-scenes" details change, as long as they get what they expect.
+
+TODO: Example of how to instantiate the component in a test
+
+TODO: Some examples of how we *want* to be able to write tests (i.e., we want to
+be able to write something like component.isListVisible())
+
+TODO: Explanation of testing utility for the component, and example 
+implementation.
+
+TODO: Explanation of simulating user DOM events

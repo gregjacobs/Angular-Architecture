@@ -55,3 +55,10 @@ c. For utility methods, these should be abstracted into different classes.
      getLastBusinessDayOfMonth(), getHolidayList(), etc. These belong in a class
      such as Calendar instead.
 
+
+
+Points:
+
+- Talk about domain objects. Models and Collections. Backbone has this right.
+  - Example: AccountsCollection object from Morgan Stanley app has filtering
+    capabilities based on account name, account nickname, etc.

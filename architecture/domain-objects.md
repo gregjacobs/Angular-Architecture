@@ -55,3 +55,12 @@ we can circumvent this to an extent at the moment with factories that create
 common domain objects based on the input service. Basically, these would apply
 the necessary data transformations to convert from the source service formats →
 common domain object format.
+
+
+
+Points:
+
+- Talk about Models and Collections. Backbone has this right.
+  - Example: AccountsCollection object from Morgan Stanley app has filtering
+    capabilities based on account name, account nickname, etc.
+  - Don't do this filtering in views.
