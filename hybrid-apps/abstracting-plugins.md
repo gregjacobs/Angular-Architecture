@@ -1,9 +1,14 @@
-# Facades for Device Plugins
+---
+title: Abstracting Native Plugins
+layout: page-with-nav
+permalink: /hybrid-apps/abstracting-plugins/
+---
 
-Use an Angular-aware facade to abstract away device plugins. This has the 
-following advantages:
 
-1. The facade can handle both the browser case and the device case.
+Use an Angular-aware facade (service) to abstract away device plugins. This has 
+the following advantages:
+
+1. The service can handle both the browser case and the device case.
 2. They don't polyfill the plugin on the `window` object, making unit testing
    easier. (The `window` object is not "cleared" between tests.)
 3. They provide a perfect place to make sure that `$rootScope.$apply()` is 
@@ -14,17 +19,17 @@ following advantages:
 
 We want to avoid checks like this all over the place in code:
 
-```
+{% highlight javascript %}
 if( $window.myPlugin ) {  // are we on a device?
    $window.myPlugin.callMethod();
 }
-```
+{% endhighlight %}
 
 Better, using a Facade to take care of this check for us:
 
-```
+{% highlight javascript %}
 MyPlugin.callMethod();  // `MyPlugin` facade should handle both the browser case and the device case
-```
+{% endhighlight %}
 
 
 ## Polyfills
@@ -50,13 +55,13 @@ a `$rootScope.$apply()` call.
 
 Example of old way:
 
-```
+{% highlight javascript %}
 $window.myPlugin.callMethod( function callback() {
    $rootScope.$apply( function() {
       // do actual success logic here
    } );
 } );
-```
+{% endhighlight %}
 
 The `$rootScope.$apply()` is very easy to forget here, and must be duplicated 
 for every call to this plugin method.
@@ -66,16 +71,16 @@ A facade should return an Angular promise, which will automatically run a
 `$rootScope.$apply()` for you. Hence, a `$rootScope.$apply()` will never be 
 forgotten. Example:
 
-```
+{% highlight javascript %}
 MyPlugin.callMethod().then( function() {
    // handle success here - promise runs the $rootScope.$apply() for us
 } );
-```
+{% endhighlight %}
 
 
 ## Full Facade Example
 
-```
+{% highlight javascript %}
 angular.module( 'msApp' ).factory( 'MyPlugin',
          [ '$window', '$q',
 function (  $window,   $q ) {
@@ -83,14 +88,13 @@ function (  $window,   $q ) {
 
    // Public API
    return {
-      callMethod1 : callMethod1,  // an example with a "callbacks" device plugin
-      callMethod2 : callMethod2   // an example with a plugin that returns a promise itself
+      callMethod : callMethod
    };
    
 
    /**
     * Example function which calls an underlying plugin API that uses 
-    * callbacks (Shim and stock Cordova plugins).
+    * callbacks (such as Stock Cordova Plugins).
     * 
     * @return {Promise}
     */
@@ -100,9 +104,9 @@ function (  $window,   $q ) {
       
       } else {
          var deferred = $q.defer();  // Because we use an Angular deferred, a `$rootScope.$apply()` call will be made
-                                      // when the promise is resolved or rejected.
+                                     // when the promise is resolved or rejected.
          
-         $window.myPlugin.callMethod1( 
+         $window.myPlugin.callMethod( 
             function successCallback() { deferred.resolve(); }, 
             function errorCallback()   { deferred.reject(); } 
          );
@@ -111,25 +115,5 @@ function (  $window,   $q ) {
       }
    }
    
-   
-   /**
-    * Example function which calls an underlying plugin API that uses a Q 
-    * library promise (most custom plugins created by the MS mobile UI team).
-    * 
-    * @return {Promise}
-    */
-   function callMethod2() {
-      if( !$window.myPlugin ) {  // browser case - return resolved promise
-            return $q.when();
-        
-        } else {
-            return $q.when( $window.myPlugin.callMethod2() );  // use $q.when() to convert Q promise into an Angular promise
-        }
-   }
-   
 } ] );
-
-```
-
-For a examples of this in our code base, see `BinaryViewer.js`, `DeviceStatusBar.js`,
-`Notification.js`, etc.
+{% endhighlight %}

@@ -9,7 +9,7 @@ way of organizing files into controllers/directives/services/views directories
 quickly becomes unwieldy when you have 10+ files in each, let alone 100's of 
 files.  
 
-The old way of doing things:
+The **old** way of doing things:
 
     scripts
         controllers
@@ -32,7 +32,7 @@ The old way of doing things:
         settings.html
         
 
-Instead, a better way is to organize by feature:
+Instead, a **better** way is to organize by feature:
 
     app
         components

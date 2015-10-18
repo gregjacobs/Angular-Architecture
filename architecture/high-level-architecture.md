@@ -4,14 +4,14 @@ layout: page-with-nav
 permalink: /architecture/high-level-architecture/
 ---
 
-In general, an app's architecture should be fairly simple:
+In general, the structure of an app's architecture should be fairly simple:
 
-* Service Layer
-    * Services
-    * Domain Objects
-* Components/Pages
-    * HTML Templates
-    * Controllers
+    Service Layer
+        Services
+        Domain Objects
+    Components/Pages
+        HTML Templates  -->  One-to-one correlation
+        Controllers    / 
     
 
 ## Service Layer
@@ -36,4 +36,4 @@ controller.
 
 ## Directory Structure
 
-See 
+See [File Organization](/architecture/file-organization/) 

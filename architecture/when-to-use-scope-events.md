@@ -1,5 +1,5 @@
 ---
-title: Components
+title: When to Use Scope Events
 layout: page-with-nav
 permalink: /architecture/when-to-use-scope-events/
 ---
