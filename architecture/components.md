@@ -24,12 +24,15 @@ Points:
     so you can modify the DOM, create a public init() method and call it from the
     link() function
 - Single responsibility: Take some data, and display to the user. Don't call
-  services (that's the job of the page to marshal the data), don't do data
-  transformations/filtering (likely the job of the service or domain object), 
-  etc. 
+  services for data (that's the job of the page controller to marshal the data), 
+  don't do data transformations/filtering (likely the job of the service or 
+  domain object), etc. 
   - Only job for logic here may be to format the data for the particular view.
   - There are some exceptions to the rule (for instance, you have a complex
     modal dialog that is used in many places in your app, and has to load data
     from a few places), but for the most part, keep your logic in your services
     and domain objects. Think: "If I need to use this logic somewhere else in 
     the app, where would it be reusable from?"
+- Don't load data. A view component shouldn't be tied to a data source. This 
+  makes the view component much more flexible if it can just be fed objects from
+  data source A in some cases, or fed objects from data source B in other cases.

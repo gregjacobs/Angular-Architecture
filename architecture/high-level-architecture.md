@@ -45,8 +45,3 @@ which will then feed it to your view components. It:
 2. Provides a library of utility functionality for working with, transforming, 
    or otherwise processing your data and functionality.
 3. Calling mobile device plugins (Phonegap/Cordova/Crosswalk)
-
-
-## Directory Structure
-
-See [File Organization](/architecture/file-organization/) 

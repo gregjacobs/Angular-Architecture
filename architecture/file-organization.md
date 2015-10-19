@@ -48,6 +48,7 @@ Instead, a **better** way is to organize by feature:
         settings
             settings.html
             settings.js
+        app.js
         
         
 This has the following advantages:
@@ -95,10 +96,10 @@ what this looks like:
             user
                 UserRolesService.js
                 UserPermissionsService.js
+        app.js
        
        
-
-
+       
 Moral of the story is:
 
 > Organize by feature

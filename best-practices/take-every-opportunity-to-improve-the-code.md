@@ -11,6 +11,6 @@ that should happen every day during development.
 Don’t worry about making a pull request a little more complicated – we’re
 looking for the best end state here. However, if the changes are large, you
 could pull request the reorganization/refactoring commit(s) separately, and
-then the new feature/bugfix after. I would love to see every change involve a
-little bit of refactoring/cleanup/addition of tests, and then the addition of
-the new feature being developed.
+then the new feature/bugfix after. Just about every change to the codebase 
+should involve a little bit of refactoring/cleanup/addition of tests, and then 
+the addition of the new feature being developed.
