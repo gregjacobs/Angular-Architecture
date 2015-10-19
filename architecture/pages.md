@@ -153,7 +153,7 @@ good goal.
 In order to do this, you want to break down your pages into sub 
 [components](/architecture/components).
 
-Example of messy page:
+Example of *messy* page:
 
 {% highlight html %}
 <div>
@@ -189,8 +189,11 @@ Example of messy page:
     
     <div class="footer">
         <div>
-            <button>...</button>
-            <button>...</button>
+            <span>...</span>
+            <span>...</span>
+        </div>
+        <div>
+            <span></span>
         </div>
         <div>
             <span>...</span>
@@ -200,7 +203,7 @@ Example of messy page:
 {% endhighlight %}
 
 
-Example of page nicely broken down into distinct components:
+Example of the same page nicely broken down into distinct components:
 
 {% highlight html %}
 <div>
