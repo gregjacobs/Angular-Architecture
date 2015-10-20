@@ -8,54 +8,15 @@ Pages are what make up your app. Each page displays a UI to the user, and is
 composed of HTML elements and child [Components](/architecture/components) to
 accept the user's input, display information, etc.
 
-## The Old Way of Doing Things:
-
-Most of the literature you will read on pages involves having a `views/` 
-directory and a `controllers/` directory, and tying a view to a controller in a 
-route configuration object.
-
-Directory structure (old):
-
-    app
-        controllers
-            HomeCtrl.js
-            Page1Ctrl.js
-            ...
-        views
-            home.html
-            page1.html
-            ...
-        app.js
-
-*app.js* (old)
-
-{% highlight javascript %}
-angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) {
-    'use strict';
-    
-    $routeProvider
-        .when( '/home', {
-            templateUrl  : 'views/home.html'
-            controller   : 'HomeCtrl'
-            controllerAs : 'ctrl'
-        } )
-        .when( '/page1', {
-            templateUrl  : 'views/page1.html'
-            controller   : 'Page1Ctrl'
-            controllerAs : 'ctrl'
-        } );
-    
-} ] );
-{% endhighlight %}
-
 
 ## Creating Pages as Components
 
-Instead of the old way of doing things, I recommend creating pages as 
-self-contained view [components](/architecture/components). An element directive 
-creates a tag for the page, and allows for attributes for input.
+Instead of [the old way of doing things](architecture/pages-the-old-way-of-doing-things), 
+I recommend creating pages as self-contained view [components](/architecture/components). 
+An element directive creates a tag for the page, and gives the ability to use 
+attributes for input (more on that later).
 
-Directory structure (new):
+Directory structure:
 
     app
         home
@@ -68,7 +29,7 @@ Directory structure (new):
 
 (see [File Organization](/architecture/file-organization) article for details)
 
-*app.js* (new)
+*app.js*
 
 {% highlight javascript %}
 angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) {
