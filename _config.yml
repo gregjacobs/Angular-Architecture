@@ -9,4 +9,4 @@ url: "http://gregjacobs.github.io/Angular-Guides" # the base hostname & protocol
 github_username: gregjacobs
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
