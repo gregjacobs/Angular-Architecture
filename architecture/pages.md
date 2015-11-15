@@ -186,6 +186,7 @@ Example of the same page nicely broken down into distinct components:
 
 See [Components](/architecture/components) guide for building components.
 
+
 ## Page Controllers
 
 Page controllers have the responsibility of calling your [service](/architecture/services) 
