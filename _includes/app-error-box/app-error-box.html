@@ -1,0 +1,8 @@
+<div class="app-error-box">
+	<div class="app-error-box__header">{% raw %}{{ ctrl.header }}{% endraw %}</div>
+	<div class="app-error-box__text">{% raw %}{{ ctrl.text }}{% endraw %}</div>
+
+	<button class="app-error-box__retryBtn" ng-click="ctrl.onRetry()">
+		{% raw %}{{ ctrl.retryBtnLabel }}{% endraw %}
+	</button>
+</div>

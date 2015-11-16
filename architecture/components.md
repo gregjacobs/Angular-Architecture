@@ -44,71 +44,24 @@ roughly looking something like this:
 
 Here is the code for this component:
 
-*components/app-error-box/app-error-box.js*
+*app-error-box.js*
 
 ```javascript
-angular.module( 'myApp' ).directive( 'appErrorBox', function() {
-    'use strict';
-    
-    return {
-        restrict : 'E',  // element directive
-        scope : {        // always use an isolate scope
-            header        : '=',
-            text          : '=',
-            retryBtnLabel : '=?',
-            onRetry       : '&'
-        },
-        bindToController : true,  // Angular 1.3+
-        
-        templateUrl  : 'components/app-error-box/app-error-box.html',
-        controller   : 'AppErrorBoxCtrl',
-        controllerAs : 'ctrl'
-    };
-    
-} );
-
-
-angular.module( 'myApp' ).controller( 'AppErrorBoxCtrl', [ function() {
-    'use strict';
-    
-    var ctrl = this;
-    
-    init();
-    
-    /**
-     * Initializes the controller.
-     *
-     * @private
-     */
-    function init() {
-        ctrl.retryBtnLabel = ctrl.retryBtnLabel || 'Retry';  // default to "Retry"
-    }
-    
-} ] );
+{% include app-error-box/app-error-box.js %}
 ```
 
 
-*components/app-error-box/app-error-box.html*
+*app-error-box.html*
 
 ```html
-<div class="app-error-box">
-    <div class="app-error-box__header">{% raw %}{{ ctrl.header }}{% endraw %}</div>
-    <div class="app-error-box__text">{% raw %}{{ ctrl.text }}{% endraw %}</div>
-    
-    <button class="app-error-box__retryBtn" ng-click="ctrl.onRetry()">
-        {% raw %}{{ ctrl.retryBtnLabel }}{% endraw %}
-    </button>
-</div>
+{% include app-error-box/app-error-box.html %}
 ```
 
 
 And finally, how we might instantiate this component from a page:
 
 ```html
-<app-error-box 
-    header="header" 
-    text="text" 
-    on-retry="loadData()"></app-error-box>
+{% include app-error-box/app-error-box-usage.html %}
 ```
 
 
