@@ -8,13 +8,19 @@ Components are what make up the more complex "view pieces" of your app, which
 when pieced together, form pages of your app. (See [Components](/architecture/components/)
 and [Pages](/architecture/pages/) guides for more details on this architecture.)
 
+
 ## It's Not Enough To Test The Scope/Controller Alone
 
 Components are implemented in Angular 1.x as directives. These directives have a
 controller and an HTML template. Many testing guides recommend that your tests 
 check against properties of the `$scope`/controller for your assertions/expectations, 
-but this is not enough, and is actually really only half of the story. Think 
-of the following scenarios:
+but this is not enough, and is actually only half of the story. (You can
+see this kind of testing in action in the 
+[Components - The Old Way of Doing Things](/testing/components-the-old-way-of-doing-things/)
+article.)
+
+Otherwise, consider the following scenarios where `$scope`/controller properties
+may look good, but the component is broken:
 
 1. **Misspelled/Incorrect Property Names in the HTML Template**: It's possible 
    that your scope/controller property for say, a piece of text is correct, 
@@ -24,7 +30,7 @@ of the following scenarios:
    Example:
    
     ```html
-    <div>{% raw %}{{ headr }}{% endraw %}</div>  <!-- Should have been `header`. Who accidentally removed that 'e' character? -->
+    <div>{% raw %}{{ headr }}{% endraw %}</div>  <!-- Should have been `header`. Someone accidentally removed that 'e' character -->
     ```
 2. **Element is Accidentally Removed by an `ng-if` Above It**: 
    It's possible that your scope/controller property for a piece of text is 
@@ -77,7 +83,7 @@ The solution to all these problems? Instead of asserting against
 ## Example Component
 
 Following on the simple example component in the [Components](/architecture/components/)
-article for our app's standard "error" box, we'll test it here using this
+article for an app's standard "error" box, we'll test it here using this
 technique.
 
 A refresher on the code of our `<app-error-box>` component:
@@ -103,7 +109,7 @@ And finally, how we might instantiate this component from a page:
 ```
 
 
-## Testing This Component
+## Testing This Component via its Public Interface and Observing the DOM
 
 In order to test this component, we want to test it through its *public 
 interface*. This is a common theme in unit testing: test through the public 
@@ -121,8 +127,8 @@ initial tests:
 
 <div class="aside mb20">
     Note: You will be probably be wondering what the "TestWrapper" is when 
-    reading this test file. We will be going into it in detail later on, but 
-    know for now that it simply wraps and represents the component for the 
+    reading this test file. We will be going into that in detail later on, but 
+    for now know that it simply wraps and represents the component for the 
     tests, providing methods for common expectations, and actions that user may 
     take on the component.
 </div>
@@ -226,11 +232,11 @@ So what did we do here?
 
 ## The Component's TestWrapper
 
-So what is this "TestWrapper" in the above tests? 
+You were probably wondering what this "TestWrapper" was in the above tests. 
 
-This class is used to encapsulate knowledge of the component's HTML markup, and 
-provide expectation methods along with user action simulation methods in order 
-to effectively test the component. 
+The TestWrapper class is used to encapsulate knowledge of the particular 
+component's HTML markup, and provide methods for common expectations and user 
+action simulation in order to easily test the component. 
 
 *AppErrorBoxTestWrapper.js*
 
@@ -299,7 +305,8 @@ angular.module( 'myApp' ).factory( 'AppErrorBoxTestWrapper', [ function() {
 
 So what do we have here? 
 
-We now have a class that can wrap an `<app-error-box>` instance, which provides us:
+We have a class that can now wrap an `<app-error-box>` instance, which provides 
+us:
 
 1. Private methods to be able to retrieve the component's inner elements (the 
    `getXyzEl()` methods) 
@@ -366,94 +373,3 @@ change), and your tests will still pass if the component still works correctly.
 This is because your tests are checking the component's functionality from the 
 perspective of client code and the user, rather than calling specific internal
 methods.
-
-
-### Simple Example of Test Which Passes While Component is Broken
-
-Just to demonstrate the problem with controller-only testing here very quickly, 
-here is a test for a component that only asserts against a controller property. 
-The component itself here is broken, but the test passes:
-
-*app-display-exclamation-text.js*
-
-```javascript
-/**
- * @ngdoc directive
- * @name appDisplayExclamationText
- *
- * Takes the attribute `text`, and adds an '!' after it before displaying.
- */
-angular.module( 'myApp' ).directive( 'appDisplayExclamationText', function() {
-	'use strict';
-
-	return {
-		restrict : 'E',  // element directive
-		scope : {
-		    text : '=',
-		},
-
-		templateUrl  : 'components/app-display-text/app-display-text.html',
-		controller   : 'AppDisplayTextCtrl',
-		controllerAs : 'ctrl'
-	};
-
-} );
-
-angular.module( 'myApp' ).controller( 'AppDisplayExclamationTextCtrl', 
-         [ '$scope', 
-function (  $scope ) {
-	'use strict';
-	
-	var ctrl = this;
-
-    $scope.$watch( 'text', function onTextChange( newText ) {
-        ctrl.text = newText + '!'
-    }
-    
-} ] );
-```
-
-*app-display-exclamation-text.html*
-
-```html
-<div class="app-display-exclamation-text">{% raw %}{{ ctrl.txt }}{% endraw %}</div>
-```
-
-
-And the test that only checks the controller's (or `$scope`'s) properties:
-
-```javascript
-describe( 'AppErrorBoxCtrl', function() {
-    'use strict';
-    
-    var $controller,
-        $scope;
-    
-    beforeEach( module( 'myApp' ) );
-    
-    beforeEach( inject( function( $injector ) {
-        $controller = $injector.get( '$controller' );
-        $scope      = $injector.get( '$rootScope' ).$new();
-    } );
-    
-    
-    function createCtrl() {
-        var ctrl = $controller( 'AppErrorBoxCtrl', { $scope: $scope } );
-        $scope.$apply();  // execute $watch handler functions
-        
-        return ctrl;
-    }
-    
-    
-    it( 'should display the text with an exclamation point after it', function() {
-        $scope.text = 'My Text';
-        var ctrl = createCtrl();
-        
-        expect( ctrl.text ).toBe( 'My Text!' );
-    } );
-
-} );
-```
-
-Here, this test will pass, but the component is broken because its HTML template
-referenced `ctrl.txt` instead of `ctrl.text`.
