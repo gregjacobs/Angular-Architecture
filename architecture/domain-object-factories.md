@@ -5,6 +5,8 @@ permalink: /architecture/domain-object-factories/
 comments: true
 ---
 
+<b>(Work-in-progress)</b><br>
+
 Use a factory (and when I say 'factory', I mean an actual factory class/object - 
 not the Angular "factory" recipe) to generate your local domain objects from 
 server data.

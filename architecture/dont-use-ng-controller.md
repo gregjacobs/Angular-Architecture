@@ -12,4 +12,6 @@ Use child components (directives) instead.
 
 
 
-While we're on that point, don't use ng-include either.
+While we're on that point, don't use ng-include either. Should generally keep a
+one-to-one relationship between a controller and a view template. Create new
+[child components](/architecture/components/) instead.
