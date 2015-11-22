@@ -5,7 +5,7 @@ permalink: /hybrid-apps/abstracting-plugins/
 ---
 
 
-Use an Angular-aware facade (service) to abstract away device plugins. This has 
+Use an Angular-aware wrapper (service) to abstract away device plugins. This has 
 the following advantages:
 
 1. The service can handle both the browser case and the device case.
@@ -25,10 +25,10 @@ if( $window.myPlugin ) {  // are we on a device?
 }
 {% endhighlight %}
 
-Better, using a Facade to take care of this check for us:
+Better, using a Plugin Wrapper to take care of this check for us:
 
 {% highlight javascript %}
-MyPlugin.callMethod();  // `MyPlugin` facade should handle both the browser case and the device case
+MyPlugin.callMethod();  // `MyPlugin` wrapper should handle both the browser case and the device case
 {% endhighlight %}
 
 
@@ -41,9 +41,9 @@ First, the `window` object is not "cleared" between unit tests. Any properties
 added to it will affect all other tests from there on in.
 
 Second, when a device plugin gains a new method, it's very easy to forget to 
-update the polyfill, which is in a completely separate place. In the facade
+update the polyfill, which is in a completely separate place. In the wrapper
 world, we would always need to add the new plugin method, so it is easily
-visible that the facade method should handle both the browser case and the 
+visible that the wrapper method should handle both the browser case and the 
 device case.
 
 
@@ -67,7 +67,7 @@ The `$rootScope.$apply()` is very easy to forget here, and must be duplicated
 for every call to this plugin method.
 
 
-A facade should return an Angular promise, which will automatically run a 
+A plugin wrapper should return an Angular promise, which will automatically run a 
 `$rootScope.$apply()` for you. Hence, a `$rootScope.$apply()` will never be 
 forgotten. Example:
 
@@ -78,7 +78,7 @@ MyPlugin.callMethod().then( function() {
 {% endhighlight %}
 
 
-## Full Facade Example
+## Full Plugin Wrapper Example
 
 {% highlight javascript %}
 angular.module( 'msApp' ).factory( 'MyPlugin',

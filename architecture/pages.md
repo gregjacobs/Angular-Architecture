@@ -20,11 +20,11 @@ Directory structure:
 
     app
         home
-            my-home.html
-            my-home.js
+            app-home.html
+            app-home.js
         page1
-            my-page1.html
-            my-page1.js
+            app-page1.html
+            app-page1.js
         app.js
 
 (see [File Organization](/architecture/file-organization) article for details)
@@ -37,18 +37,18 @@ angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) 
     
     $routeProvider
         .when( '/home', {
-            template : '<my-home></my-home>'
+            template : '<app-home></app-home>'
         } )
         .when( '/page1/:param', {
             template : function( routeParams ) {
-                return '<my-page1 param="' + routeParams.param + '"></my-page1>';
+                return '<app-page1 param="' + routeParams.param + '"></app-page1>';
             }
         } );
 
 } ] );
 {% endhighlight %}
 
-*my-page1.js*
+*app-page1.js*
 
 {% highlight javascript %}
 angular.module( 'myApp' ).directive( 'myPage1', function() {
@@ -60,7 +60,7 @@ angular.module( 'myApp' ).directive( 'myPage1', function() {
             param : '@'
         },
         
-        templateUrl  : 'page1/my-page1.html',
+        templateUrl  : 'page1/app-page1.html',
         controller   : 'MyPage1Ctrl',
         controllerAs : 'ctrl'
     };
@@ -168,19 +168,19 @@ Example of the same page nicely broken down into distinct components:
 
 {% highlight html %}
 <div>
-    <my-header class="header" title="ctrl.title">
+    <app-header class="header" title="ctrl.title">
     
-    <my-spinner ng-if="ctrl.pageState === 'loading'"></my-spinner>
+    <app-spinner ng-if="ctrl.pageState === 'loading'"></app-spinner>
     
     <div class="content" ng-if="ctrl.pageState === 'loaded'">
-        <my-item ng-repeat="item in ctrl.items" 
+        <app-item ng-repeat="item in ctrl.items" 
                  on-edit="ctrl.edit( item )" 
-                 on-remove="ctrl.remove( item )"></my-item>
+                 on-remove="ctrl.remove( item )"></app-item>
         
-        <my-items-options on-select-all="ctrl.selectAll()"></my-items-options>
+        <app-items-options on-select-all="ctrl.selectAll()"></app-items-options>
     </div>
     
-    <my-footer></my-footer>
+    <app-footer></app-footer>
 </div>
 {% endhighlight %}
 
@@ -196,7 +196,7 @@ In general, page controllers should load data rather than individual [component]
 controllers, so that it's left to the page to control loading spinners and 
 coordinate between potentially multiple calls / data sources. 
 
-*my-page1.js*
+*app-page1.js*
 
 {% highlight javascript %}
 angular.module( 'myApp' ).directive( 'myPage1', function() {
@@ -264,9 +264,6 @@ angular.module( 'myApp' ).controller( 'MyPage1Ctrl', [ 'TodoService', function( 
 2. The only reason to inject `$scope` is so that you can add a `$scope.on( '$destroy', destroyFn )`
    handler.
    
-   
-TODO: Add piece about controller style. Link to John Papa's style guide
-
 
 ## Testing Pages
 

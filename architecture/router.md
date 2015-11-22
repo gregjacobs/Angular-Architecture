@@ -17,13 +17,13 @@ angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) 
     
     $routeProvider
         .when( '/home', {
-            template : '<my-home></my-home>'
+            template : '<app-home></app-home>'
         } )
         .when( '/page1', {
-            template : '<my-page1></my-page1>'
+            template : '<app-page1></app-page1>'
         } )
         .when( '/page2', {
-            template : '<my-page2></my-page2>'
+            template : '<app-page2></app-page2>'
         } )
         .otherwise( '/home' );
     
@@ -59,11 +59,11 @@ angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) 
     
     $routeProvider
         .when( '/home', {
-            template : '<my-home></my-home>'
+            template : '<app-home></app-home>'
         } )
         .when( '/page1/:param', {
             template : function( routeParams ) {
-                return '<my-page1 param="' + routeParams.param + '"></my-page1>';
+                return '<app-page1 param="' + routeParams.param + '"></app-page1>';
             }
         } )
         .otherwise( '/home' );
@@ -74,10 +74,10 @@ angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) 
 The `template` option accepts a function which is called with the route params
 object. We use this to construct a tag with the appropriate attributes.
 
-Note: The above assumes that the directive definition for `<my-page1>` looks
+Note: The above assumes that the directive definition for `<app-page1>` looks
 something like this:
  
-*my-page1.js*
+*app-page1.js*
 
 {% highlight javascript %}
 angular.module( 'myApp' ).directive( 'myPage1', function() {
@@ -89,7 +89,7 @@ angular.module( 'myApp' ).directive( 'myPage1', function() {
             param : '@'
         },
         
-        templateUrl  : 'pages/page1/my-page1.html',
+        templateUrl  : 'pages/page1/app-page1.html',
         controller   : 'MyPage1Ctrl'
     };
 
