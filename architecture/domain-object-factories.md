@@ -1,7 +1,8 @@
 ---
-title: Factories to Create Domain Objects
+title: "Architecture: Factories to Create Domain Objects"
 layout: page-with-nav
 permalink: /architecture/domain-object-factories/
+comments: true
 ---
 
 Use a factory (and when I say 'factory', I mean an actual factory class/object - 

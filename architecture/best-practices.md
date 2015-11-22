@@ -1,7 +1,8 @@
 ---
-title: Architecture Best Practices
+title: "Architecture: Best Practices"
 layout: page-with-nav
 permalink: /architecture/best-practices/
+comments: true
 ---
 
 ## HTML Templates

@@ -1,7 +1,8 @@
 ---
-title: Abstracting Native Plugins
+title: "Hybrid Apps: Abstracting Native Plugins"
 layout: page-with-nav
 permalink: /hybrid-apps/abstracting-plugins/
+comments: true
 ---
 
 

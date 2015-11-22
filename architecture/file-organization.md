@@ -1,7 +1,8 @@
 ---
-title: File Organization
+title: "Architecture: File Organization"
 layout: page-with-nav
 permalink: /architecture/file-organization/
+comments: true
 ---
 
 If you've done a large project, you know that the "recommended" (quote-unquote)

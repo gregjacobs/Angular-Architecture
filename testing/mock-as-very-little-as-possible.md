@@ -1,11 +1,12 @@
 ---
-title: Mock as Very Little As Possible
+title: "Testing Best Practices: Mock as Very Little As Possible"
 layout: page-with-nav
 permalink: /testing/mocking/
+comments: true
 ---
 
 
-## Always Write Integration Tests (i.e. Don't Mock)
+## Always Write Integration Tests
 
 Many schools of thought say that everything being tested should be a unit test,
 and it must be completely isolated from the system with mocks for all 

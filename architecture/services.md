@@ -1,7 +1,8 @@
 ---
-title: Services
+title: "Architecture: Services"
 layout: page-with-nav
 permalink: /architecture/services/
+comments: true
 ---
 
 Should simply access data, and be stateless (with the exception of caching). No

@@ -1,7 +1,8 @@
 ---
-title: Pages - The Old Way of Doing Things
+title: "Architecture: Pages - The Old Way of Doing Things"
 layout: page-with-nav
 permalink: /architecture/pages-the-old-way-of-doing-things/
+comments: true
 ---
 
 Most of the literature you will read on pages involves having a `views/` 

@@ -1,7 +1,8 @@
 ---
-title: Router
+title: "Architecture: Router"
 layout: page-with-nav
 permalink: /architecture/router/
+comments: true
 ---
 
 Your app's router is what will direct the user to the first [page](/architecture/pages)

@@ -1,7 +1,8 @@
 ---
-title: High Level Overview
+title: "Architecture: High Level Overview"
 layout: page-with-nav
-permalink: /architecture/high-level-architecture/
+permalink: /architecture/high-level-overview/
+comments: true
 ---
 
 In general, the structure of an app's architecture should be fairly simple:

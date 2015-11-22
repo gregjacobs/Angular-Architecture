@@ -1,7 +1,8 @@
 ---
-title: Take Every Opportunity to Improve the Code
+title: "Best Practices: Take Every Opportunity to Improve the Code"
 layout: page-with-nav
 permalink: /best-practices/take-every-opportunity-to-improve-the-code/
+comments: true
 ---
 
 Whether it is to better organize the code, add tests, clean up old code, etc. 

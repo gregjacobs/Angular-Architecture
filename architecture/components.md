@@ -1,7 +1,8 @@
 ---
-title: Components
+title: "Architecture: Components"
 layout: page-with-nav
 permalink: /architecture/components/
+comments: true
 ---
 
 Create your app out reusable, self-contained view components. These will be in 

@@ -1,7 +1,8 @@
 ---
-title: Domain Objects
+title: "Architecture: Domain Objects"
 layout: page-with-nav
 permalink: /architecture/domain-objects/
+comments: true
 ---
 
 We should use known domain objects for passing data around the system. Have

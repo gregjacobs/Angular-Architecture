@@ -1,7 +1,8 @@
 ---
-title: Testing Components - The Old Way of Doing Things
+title: "Testing: Components - The Old Way of Doing Things"
 layout: page-with-nav
 permalink: /testing/components-the-old-way-of-doing-things/
+comments: true
 ---
 
 As part of the [Testing Components](/testing/components/) article, this is to

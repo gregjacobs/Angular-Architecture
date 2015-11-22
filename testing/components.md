@@ -1,7 +1,8 @@
 ---
-title: Testing Components
+title: "Testing: Components"
 layout: page-with-nav
 permalink: /testing/components/
+comments: true
 ---
 
 Components are what make up the more complex "view pieces" of your app, which 

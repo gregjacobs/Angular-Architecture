@@ -1,7 +1,8 @@
 ---
-title: Pages
+title: "Architecture: Pages"
 layout: page-with-nav
 permalink: /architecture/pages/
+comments: true
 ---
 
 Pages are what make up your app. Each page displays a UI to the user, and is 

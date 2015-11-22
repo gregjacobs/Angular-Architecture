@@ -1,7 +1,8 @@
 ---
-title: Testing Services
+title: "Testing: Services"
 layout: page-with-nav
 permalink: /testing/services/
+comments: true
 ---
 
 

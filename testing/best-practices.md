@@ -1,7 +1,8 @@
 ---
-title: Testing Best Practices
+title: "Testing: Best Practices"
 layout: page-with-nav
 permalink: /testing/best-practices/
+comments: true
 ---
 
 Main Points:

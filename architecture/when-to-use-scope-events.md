@@ -1,7 +1,8 @@
 ---
-title: When to Use Scope Events
+title: "Architecture Best Practices: When to Use Scope Events"
 layout: page-with-nav
 permalink: /architecture/when-to-use-scope-events/
+comments: true
 ---
 
 Let's start off this one with when *not* to use scope events. I find this to be 

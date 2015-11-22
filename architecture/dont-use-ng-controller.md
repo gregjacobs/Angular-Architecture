@@ -1,7 +1,8 @@
 ---
-title: Don't Use `ng-controller`
+title: "Architecture Best Practices: Don't Use `ng-controller`"
 layout: page-with-nav
 permalink: /architecture/dont-use-ng-controller/
+comments: true
 ---
 
 Use child components (directives) instead.
