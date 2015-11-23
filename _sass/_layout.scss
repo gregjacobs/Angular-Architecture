@@ -234,18 +234,3 @@
         }
     }
 }
-
-
-/**
- * Two Column Layout
- */
-.two-col__left { box-sizing: border-box; float: left; width: 70%; }
-.two-col__right { box-sizing: border-box; float: left; width: 30%; padding-left: 40px; }
-
-
-.aside {
-	font-size: $small-font-size;
-	color: $grey-color;
-	background-color: $grey-color-light;
-	padding: 10px;
-}
