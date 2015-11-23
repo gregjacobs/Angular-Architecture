@@ -24,7 +24,7 @@ then is going to navigate to the other pages of your app.
 
 ## Pages/Components
 
-[Pages](/architecture/pages/) and [components](/architecture/components/) are 
+[Pages]({{ site.baseurl }}/architecture/pages/) and [components]({{ site.baseurl }}/architecture/components/) are 
 going to make up the visual portion of your app. A page displays information to 
 your users, and is usually composed of one or more view components. A component 
 is simply a view, representing a piece of your page (for example, a list, an 
@@ -41,7 +41,7 @@ The service layer is for accessing data and for your application's controllers,
 which will then feed it to your view components. It: 
 
 1. Accesses data (from network requests, local storage, etc.), and returns 
-   [domain objects](/architecture/domain-objects/) (models and collections) to 
+   [domain objects]({{ site.baseurl }}/architecture/domain-objects/) (models and collections) to 
    represent it.
 2. Provides a library of utility functionality for working with, transforming, 
    or otherwise processing your data and functionality.

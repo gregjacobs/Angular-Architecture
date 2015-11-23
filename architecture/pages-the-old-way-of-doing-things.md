@@ -44,4 +44,4 @@ angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) 
 {% endhighlight %}
 
 There is a better way, which is creating pages as components. See the 
-[Pages](/architecture/pages/) article for details.
+[Pages]({{ site.baseurl }}/architecture/pages/) article for details.

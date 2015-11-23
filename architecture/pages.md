@@ -6,14 +6,14 @@ comments: true
 ---
 
 Pages are what make up your app. Each page displays a UI to the user, and is 
-composed of HTML elements and child [Components](/architecture/components) to
+composed of HTML elements and child [Components]({{ site.baseurl }}/architecture/components) to
 accept the user's input, display information, etc.
 
 
 ## Creating Pages as Components
 
-Instead of [the old way of doing things](architecture/pages-the-old-way-of-doing-things), 
-I recommend creating pages as self-contained view [components](/architecture/components). 
+Instead of [the old way of doing things]({{ site.baseurl }}/architecture/pages-the-old-way-of-doing-things), 
+I recommend creating pages as self-contained view [components]({{ site.baseurl }}/architecture/components). 
 An element directive creates a tag for the page, and gives the ability to use 
 attributes for input (more on that later).
 
@@ -28,7 +28,7 @@ Directory structure:
             app-page1.js
         app.js
 
-(see [File Organization](/architecture/file-organization) article for details)
+(see [File Organization]({{ site.baseurl }}/architecture/file-organization) article for details)
 
 *app.js*
 
@@ -90,10 +90,10 @@ This design has the following advantages:
    somewhere in its source code.
 3. **Testability**: It is very easy to instantiate the page using `$compile` 
    from unit tests, which gives you the ability to test the DOM of the page
-   rather than just the `$scope`. See [Testing Pages](/testing/pages) for 
+   rather than just the `$scope`. See [Testing Pages]({{ site.baseurl }}/testing/pages) for 
    details.
 
-If you haven't read the article for [Routing](/architecture/router) yet, I 
+If you haven't read the article for [Routing]({{ site.baseurl }}/architecture/router) yet, I 
 recommend you do so now.
 
 
@@ -103,7 +103,7 @@ recommend you do so now.
 - Don't access `$routeParams` from inside your page controllers. In fact, never
   use the `$routeParams` injectable at all. Instead, feed the input for your 
   pages using attributes. This makes your pages 100% flexible, and reusable if 
-  needed. See the [Router](/architecture/router) article for details on how to 
+  needed. See the [Router]({{ site.baseurl }}/architecture/router) article for details on how to 
   pass in route parameters using attributes.
    
 
@@ -113,7 +113,7 @@ You want to keep the HTML of your page templates short. 100 lines or less is a
 good goal.
 
 In order to do this, you want to break down your pages into sub 
-[components](/architecture/components).
+[components]({{ site.baseurl }}/architecture/components).
 
 Example of *messy* page:
 
@@ -185,15 +185,15 @@ Example of the same page nicely broken down into distinct components:
 </div>
 {% endhighlight %}
 
-See [Components](/architecture/components) guide for building components.
+See [Components]({{ site.baseurl }}/architecture/components) guide for building components.
 
 
 ## Page Controllers
 
-Page controllers have the responsibility of calling your [service](/architecture/services) 
+Page controllers have the responsibility of calling your [service]({{ site.baseurl }}/architecture/services) 
 layer to retrieve data, and expose it to be consumed by your view components.
 
-In general, page controllers should load data rather than individual [component](/architecture/components) 
+In general, page controllers should load data rather than individual [component]({{ site.baseurl }}/architecture/components) 
 controllers, so that it's left to the page to control loading spinners and 
 coordinate between potentially multiple calls / data sources. 
 
@@ -268,4 +268,4 @@ angular.module( 'myApp' ).controller( 'MyPage1Ctrl', [ 'TodoService', function( 
 
 ## Testing Pages
 
-See [Testing Pages](/testing/pages) guide.
+See [Testing Pages]({{ site.baseurl }}/testing/pages) guide.

@@ -5,7 +5,7 @@ permalink: /architecture/router/
 comments: true
 ---
 
-Your app's router is what will direct the user to the first [page](/architecture/pages)
+Your app's router is what will direct the user to the first [page]({{ site.baseurl }}/architecture/pages)
 she sees, and will provide the ability to navigate to other pages of the app.
 
 I personally define my routes in `app.js` in a `config` block. For example:
@@ -31,11 +31,11 @@ angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) 
 } ] );
 {% endhighlight %}
 
-Why `template` instead of `templateUrl`? Well, as described in the [Pages](/architecture/pages)
-article, pages should view [components](/architecture/components), only big
+Why `template` instead of `templateUrl`? Well, as described in the [Pages]({{ site.baseurl }}/architecture/pages)
+article, pages should view [components]({{ site.baseurl }}/architecture/components), only big
 ones. This allows for maximum reuse of them (say in the future, you wish to put 
 one inside of a modal dialog), and also allows for easier testing of them (see 
-[Testing Pages](/testing/pages)).
+[Testing Pages]({{ site.baseurl }}/testing/pages)).
 
 You could choose to prefer using `templateUrl` and having an HTML file that 
 solely writes out the one tag, but I don't find this to be worth the effort.
@@ -48,7 +48,7 @@ inside their controllers. As I mentioned earlier, pages should be flexible
 enough for us to use them elsewhere in the future (again, such as in a modal
 dialog).
 
-Therefore, just like [components](/architecture/components), our pages should 
+Therefore, just like [components]({{ site.baseurl }}/architecture/components), our pages should 
 accept attributes for how they should be configured and displayed. We can then 
 pass in the route params to the attributes. For example:
 

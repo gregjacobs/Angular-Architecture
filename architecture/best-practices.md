@@ -9,10 +9,10 @@ comments: true
 
 HTML Templates should generally never be longer than 100 lines. Many templates 
 I have come across are generally packed with so many details of what could be 
-self-contained [child components](/architecture/components/) that they become 
+self-contained [child components]({{ site.baseurl }}/architecture/components/) that they become 
 unreadable.
 
-Use [components](/architecture/components/) to manage the length, breaking the 
+Use [components]({{ site.baseurl }}/architecture/components/) to manage the length, breaking the 
 page down, and moving the details about how each component’s sub-elements are 
 built into the components themselves.
 

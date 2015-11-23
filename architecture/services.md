@@ -27,7 +27,7 @@ TODO: Points to cover:
 3. For utility methods, these should be abstracted into different classes/modules.
 
     1. Methods that deal with queries on the data most often belong on 
-       [Domain Object Classes](/architecture/domain-objects) Domain Object classes 
+       [Domain Object Classes]({{ site.baseurl }}/architecture/domain-objects) Domain Object classes 
        (which would represent, for example, a single User, Account, CalendarEvent, 
        etc.)<br><br>
        For instance, instead of something like `XyzService.isUserEnabled(user)`, 

@@ -15,7 +15,7 @@ Main Points:
 
 ## Always Write Integration Tests (i.e. Don't Mock)
 
-As discussed in the [Mocking](/testing/mocking/) article, you do not want to 
+As discussed in the [Mocking]({{ site.baseurl }}/testing/mocking/) article, you do not want to 
 mock any of your own code if at all possible. Write tests as integration tests,
 and use testing utilities to simulate behavior when needed. See the Mocking 
 article for more details.
@@ -24,7 +24,7 @@ article for more details.
 
 ## Test the DOM for Components/Pages
 
-As discussed in the [Testing Components](/testing/components/) article, simply 
+As discussed in the [Testing Components]({{ site.baseurl }}/testing/components/) article, simply 
 testing `$scope` properties is not effective and can leave you with a broken 
 system that passes all tests. See that article for details.
 

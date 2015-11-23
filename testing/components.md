@@ -6,8 +6,8 @@ comments: true
 ---
 
 Components are what make up the more complex "view pieces" of your app, which 
-when pieced together, form pages of your app. (See [Components](/architecture/components/)
-and [Pages](/architecture/pages/) guides for more details on this architecture.)
+when pieced together, form pages of your app. (See [Components]({{ site.baseurl }}/architecture/components/)
+and [Pages]({{ site.baseurl }}/architecture/pages/) guides for more details on this architecture.)
 
 
 ## It's Not Enough To Test The Scope/Controller Alone
@@ -17,7 +17,7 @@ controller and an HTML template. Many testing guides recommend that your tests
 check against properties of the `$scope`/controller for your assertions/expectations, 
 but this is not enough, and is actually only half of the story. (You can
 see this kind of testing in action in the 
-[Components - The Old Way of Doing Things](/testing/components-the-old-way-of-doing-things/)
+[Components - The Old Way of Doing Things]({{ site.baseurl }}/testing/components-the-old-way-of-doing-things/)
 article.)
 
 Otherwise, consider the following scenarios where `$scope`/controller properties
@@ -83,7 +83,7 @@ The solution to all these problems? Instead of asserting against
 
 ## Example Component
 
-Following on the simple example component in the [Components](/architecture/components/)
+Following on the simple example component in the [Components]({{ site.baseurl }}/architecture/components/)
 article for an app's standard "error" box, we'll test it here using this
 technique.
 
@@ -332,7 +332,7 @@ Breaking down the purpose of this class further, it:
    Also, when the markup of the component changes, the only thing that needs to 
    be updated is the TestWrapper for the component, specifically the `getXyzEl()`
    methods. This becomes especially important when the TestWrapper is used to 
-   represent the component on page tests. See [Testing Pages](/testing/pages) 
+   represent the component on page tests. See [Testing Pages]({{ site.baseurl }}/testing/pages) 
    for more information on that.
 
 2. **Provides Common Expectation (Assertion) Methods to Check the Component's State**:

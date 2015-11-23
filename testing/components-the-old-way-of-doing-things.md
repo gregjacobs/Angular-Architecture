@@ -5,7 +5,7 @@ permalink: /testing/components-the-old-way-of-doing-things/
 comments: true
 ---
 
-As part of the [Testing Components](/testing/components/) article, this is to
+As part of the [Testing Components]({{ site.baseurl }}/testing/components/) article, this is to
 demonstrate the problem with controller-only testing in a very short example. 
 Here is a test for a component that only asserts against a controller property,
 rather than testing the component as a whole. The component itself here is 
@@ -95,4 +95,4 @@ describe( 'AppErrorBoxCtrl', function() {
 Here, this test will pass, but the component is broken because its HTML template
 referenced `ctrl.txt` instead of `ctrl.text`.
 
-See the [Testing Components](/testing/components) article for a better way.
+See the [Testing Components]({{ site.baseurl }}/testing/components) article for a better way.
