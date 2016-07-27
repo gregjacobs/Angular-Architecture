@@ -7,42 +7,39 @@ comments: true
 
 In general, the structure of an app's architecture should be fairly simple:
 
-    Router
-    Components/Pages
-        HTML Templates  --->  One-to-one correlation
-        Controllers     -/
-    Service Layer
-        Services
-        Domain Objects
-        
-
-## Router
+## 1. [Router]({{ site.baseurl }}/architecture/router/)
 
 The router is going to direct your users to the initial page of your app, and
 then is going to navigate to the other pages of your app.
 
-
-## Pages/Components
-
-[Pages]({{ site.baseurl }}/architecture/pages/) and [components]({{ site.baseurl }}/architecture/components/) are 
-going to make up the visual portion of your app. A page displays information to 
-your users, and is usually composed of one or more view components. A component 
-is simply a view, representing a piece of your page (for example, a list, an 
-information box, etc.)
-
-Both pages and components are composed of an HTML template, a directive 
-definition, and a controller. Only one HTML template should relate to one 
-controller.
+{% include diagrams/router.md %}
 
 
-## Service Layer 
+## 2. [Pages]({{ site.baseurl }}/architecture/pages/)/[Components]({{ site.baseurl }}/architecture/components/)
 
-The service layer is for accessing data and for your application's controllers,
-which will then feed it to your view components. It: 
+These make up the visual portion of your app. A page displays information 
+to your users, and is usually composed of one or more view components. 
+
+A component is simply a view, representing a piece of real estate on your page 
+(for example, a list, an information box, etc.)
+
+A page facilitates all data retrieval, and then fans out the data to the 
+components. 
+
+{% include diagrams/page-and-components.md %}
+
+
+## 3. [Services]({{ site.baseurl }}/architecture/services/)
+
+Services are to allow your pages to access data, which is eventually passed to
+your view components. 
+
+{% include diagrams/service.md %}
+
+Responsibilities include:
 
 1. Accesses data (from network requests, local storage, etc.), and returns 
    [domain objects]({{ site.baseurl }}/architecture/domain-objects/) (models and collections) to 
    represent it.
 2. Provides a library of utility functionality for working with, transforming, 
    or otherwise processing your data and functionality.
-3. Calling mobile device plugins (Phonegap/Cordova/Crosswalk)

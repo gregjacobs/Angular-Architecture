@@ -4,17 +4,15 @@
 {% include head.html %}
 
 <body>
+	<div class="container-fluid">
+		<div class="row">
+			{% include header.html %}
+		</div>
 
-	{% include header.html %}
-
-	<div class="page-content">
-		<div class="wrapper">
+		<div class="row">
 			{{ content }}
 		</div>
 	</div>
-
-	{% include footer.html %}
-
 </body>
 
 </html>

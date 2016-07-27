@@ -6,39 +6,40 @@ comments: true
 ---
 
 Your app's router is what will direct the user to the first [page]({{ site.baseurl }}/architecture/pages)
-she sees, and will provide the ability to navigate to other pages of the app.
+they see, and will provide the ability to navigate to other pages of the app.
 
-I personally define my routes in `app.js` in a `config` block. For example:
+You may define my routes in `app.js` in a `config` block. For example:
 
 *app.js*
 
 {% highlight javascript %}
-angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) {
+angular.module( 'heroes' ).config( [ '$routeProvider', function( routeProvider ) {
     'use strict';
     
     $routeProvider
-        .when( '/home', {
-            template : '<app-home></app-home>'
+        .when( '/dashboard', {
+            template : '<heroes-dashboard-page></heroes-dashboard-page>'
         } )
-        .when( '/page1', {
-            template : '<app-page1></app-page1>'
+        .when( '/list', {
+            template : '<heroes-list-page></heroes-list-page>'
         } )
-        .when( '/page2', {
-            template : '<app-page2></app-page2>'
+        .when( '/detail', {
+            template : '<heroes-detail-page></heroes-detail-page>'
         } )
-        .otherwise( '/home' );
+        .otherwise( '/dashboard' );
     
 } ] );
 {% endhighlight %}
 
 Why `template` instead of `templateUrl`? Well, as described in the [Pages]({{ site.baseurl }}/architecture/pages)
-article, pages should view [components]({{ site.baseurl }}/architecture/components), only big
-ones. This allows for maximum reuse of them (say in the future, you wish to put 
-one inside of a modal dialog), and also allows for easier testing of them (see 
-[Testing Pages]({{ site.baseurl }}/testing/pages)).
+article, pages should view [components]({{ site.baseurl }}/architecture/components), 
+only bigger ones. This allows for maximum reuse of them (say in the future, you 
+wish to put an entire page inside of a modal dialog), and also allows for easier 
+testing of them (see [Testing Pages]({{ site.baseurl }}/testing/pages)).
 
 You could choose to prefer using `templateUrl` and having an HTML file that 
-solely writes out the one tag, but I don't find this to be worth the effort.
+solely writes out the one tag, but probably not worth the effort and explosion
+of files.
 
 
 ## Handling Route Params
