@@ -17,22 +17,22 @@ then is going to navigate to the other pages of your app.
 
 ## 2. [Pages]({{ site.baseurl }}/architecture/pages/)/[Components]({{ site.baseurl }}/architecture/components/)
 
-These make up the visual portion of your app. A page displays information 
-to your users, and is usually composed of one or more view components. 
+<li>Make up the visual portion of your app. A page displays information to your 
+users, and is composed of html and usually one or more child view components.</li> 
 
-A component is simply a view, representing a piece of real estate on your page 
-(for example, a list, an information box, etc.)
+<li>A view component is simply a piece of html+js, representing a piece of real 
+estate on your page (for example, a data list, an information box, etc.)</li>
 
-A page facilitates all data retrieval, and then fans out the data to the 
-components. 
+<li>A page facilitates all data retrieval, and then fans out the data to the 
+components.</li>
 
 {% include diagrams/page-and-components.md %}
 
 
 ## 3. [Services]({{ site.baseurl }}/architecture/services/)
 
-Services are to allow your pages to access data, which is eventually passed to
-your view components. 
+Services are to allow your pages to access data, which is passed to your view 
+components. 
 
 {% include diagrams/service.md %}
 

@@ -12,15 +12,17 @@
                                           |                  |
                                           |     |    3. HTTP Response Received
                                           |
-        1. Data Requested from Service -> |     |  <- 4. Data Models Returned
+        1. Data Requested from Service -> |     |
                                           |
+                                          |     | <- 4. Data Models Returned
+                                          |        
                                           |     |
-                                   +------+-----v-------+
-                                   |                    |
-                                   |       (Page)       |
-                                   |                    |
-                                   |  Heroes Dashboard  |
-                                   |                    |
-                                   |                    |
-                                   |                    |
-                                   +--------------------+
+                                  ++======+=====v=======++
+                                  ||                    ||
+                                  ||       (Page)       ||
+                                  ||                    ||
+                                  ||  Heroes Dashboard  ||
+                                  ||                    ||
+                                  ||                    ||
+                                  ||                    ||
+                                  ++====================++
