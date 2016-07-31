@@ -23,7 +23,7 @@ users, and is composed of html and usually one or more child view components.</l
 <li>A view component is simply a piece of html+js, representing a piece of real 
 estate on your page (for example, a data list, an information box, etc.)</li>
 
-<li>A page facilitates all data retrieval, and then fans out the data to the 
+<li>A page facilitates all data retrieval, and then distributes the data to the 
 components.</li>
 
 {% include diagrams/page-and-components.md %}
@@ -31,15 +31,8 @@ components.</li>
 
 ## 3. [Services]({{ site.baseurl }}/architecture/services/)
 
-Services are to allow your pages to access data, which is passed to your view 
-components. 
+Services are to allow your pages to access data (from network requests, local 
+storage, etc.), and returns [Models and Collections]({{ site.baseurl }}/architecture/models-and-collections/) 
+which are passed to your view components. 
 
 {% include diagrams/service.md %}
-
-Responsibilities include:
-
-1. Accesses data (from network requests, local storage, etc.), and returns 
-   [Models and Collections]({{ site.baseurl }}/architecture/models-and-collections/) to 
-   represent it.
-2. Provides a library of utility functionality for working with, transforming, 
-   or otherwise processing your data and functionality.
