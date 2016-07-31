@@ -34,7 +34,7 @@ Generally, use the [factory](https://docs.angularjs.org/guide/providers#factory-
 recipe to create singleton services.
 
 ```javascript
-angular.module( 'heroes' ).factory( 'HeroesService', function( $http, HeroesReader ) {
+angular.module( 'heroes' ).factory( 'HeroesService', function( $http, HeroesReader, HeroesWriter ) {
     'use strict';
     
     // Public API
@@ -65,7 +65,7 @@ angular.module( 'heroes' ).factory( 'HeroesService', function( $http, HeroesRead
      *
      * @param {Number} heroId The ID of the hero to load.
      * @return {Promise} A promise which is resolved with a {@link Hero} object
-     *   if found, or `null` if not. The promise is rejected if an error occurs.
+     *   when successful, or is rejected if an error occurs.
      */
     function loadHero( heroId ) {
         return $http( { url: '/path/to/hero/' + heroId } ).then( 
@@ -87,8 +87,9 @@ angular.module( 'heroes' ).factory( 'HeroesService', function( $http, HeroesRead
         var data = HeroWriter.write( hero );
         
         return $http( { 
-            url: '/path/to/hero' + ( !hero.id ? '' : '/' + hero.id ),
-            method: !hero.id ? 'POST' : 'PUT'
+            url    : '/path/to/hero' + ( !hero.id ? '' : '/' + hero.id ),
+            method : !hero.id ? 'POST' : 'PUT',
+            data   : HeroesWriter.writeHero( hero )
         } ).then( function( response ) {
             return HeroesReader.readHero( response.data );
         } );
@@ -115,73 +116,14 @@ This would tightly couple our pages and components to exactly what the server
 provides (which may change over time). Instead, we want to abstract away the
 server and represent our data with model classes.
 
-* _Why?_: Using a class to represent a data model allows that data model to be
-  easily documented across your system where that data model is passed to.
-
-* _Why?_: A model's class definition immediately tells all developers exactly 
-  which properties are going to be available. With good documentation (and/or
-  [TypeScript](https://www.typescriptlang.org)), they also tell developers which
-  data types the properties hold.
-  
-* _Why?_: Data models as classes allows you to add functionality to those 
-  models in the form of accessor/query methods, which can provide more 
-  information or combination logic than the properties themselves can.
+{% include whys-of-models-and-collections.md %}
   
 `HeroesReader` has the responsibility of converting raw HTTP responses into 
 your data models.
 
 Example HeroesReader:
 
-```js
-angular.module( 'heroes' ).factory( 'HeroesReader', function() {
-    'use strict';
-    
-    // Public API
-    return {
-        readHeroes : readHeroes,
-        readHero   : readHero
-    };
-    
-    
-    /**
-     * Reads the server response data for heroes.
-     *
-     * Example server response data:
-     * 
-     *     [
-     *          { id: 11, name: 'Mr. Nice', lastBattle: '2016-05-22T14:22:01' },
-     *          { id: 12, name: 'Narco',    lastBattle: '2016-02-01T08:52:27' },
-     *          { id: 13, name: 'Bombasto', lastBattle: '2016-04-10T18:00:52' }
-     *     ]
-     *
-     * @param {Object[]} heroObjs The array of 'hero' objects from the server.
-     * @return {Heroes[]}
-     */
-    function read( heroObjs ) {
-        return _.map( heroObjs, readHero );
-    }
-    
-    
-    /**
-     * Reads the server response data for a single Hero.
-     * 
-     * Example server response data:
-     *
-     *     { id: 11, name: 'Mr. Nice', lastBattle: '2016-05-22T14:22:01' }
-     *
-     * @param {Object} heroObj The 'hero' object from the server.
-     * @return {Hero} A Hero instance.
-     */
-    function readHero( heroObj ) {
-        return new Hero( { 
-            id         : heroObj.id,
-            name       : heroObj.name,
-            lastBattle : moment( heroObj.lastBattle )
-        } );
-    }
-    
-} );
-```
+{% include heroes-reader.md %}
 
 
 * _Why do this?_: A Reader gives you the perfect place to parse server
@@ -205,65 +147,13 @@ angular.module( 'heroes' ).factory( 'HeroesReader', function() {
   generate the models from the data to pass into your view components.
 
 
-#### Hero class
+#### Hero Model
 
-Here's an example of a "class" in ES5, but if you're able, use ES6 classes and
-[Babel](https://babeljs.io) to transpile them into ES5. Or even better, use
-[TypeScript](https://www.typescriptlang.org).
+{% include hero-model-intro.md %}
 
-```js
-angular.module( 'heroes' ).factory( 'Hero', function() {
-    'use strict';
-    
-    /**
-     * @class Hero
-     *
-     * Represents a Hero in the app.
-     * 
-     * @constructor
-     * @param {Object} props
-     * @param {Number} props.id
-     * @param {String} props.name
-     * @param {Moment} props.lastBattle
-     */
-    var Hero = function( props ) {
-        this.id = props.id;
-        this.name = props.name;
-        this.lastBattle = props.lastBattle;
-    };
-    
-    /**
-     * @return {Boolean}
-     */
-    Hero.prototype.hasBattledInLast3Months = function() {
-        return this.lastBattle.isAfter( moment().subtract( 3, 'months' ) );
-    }
-    
-    return Hero;
-    
-} );
-```
+{% include hero-model.md %}
 
-See [Models and Collections]({{ site.baseurl }}/architecture/domain-objects) 
+See [Models and Collections]({{ site.baseurl }}/architecture/models-and-collections) 
 for more details.
 
 For how to test, see [Testing Services]({{ site.baseurl }}/testing/services).
-
-<b>(Work-in-progress)</b><br>
-TODO: Additional points to cover:
-
-1. To handle things like loading pages of data, a separate, instantiable
-   class should be used, which can maintain this state (page number, data for
-   a particular data page, etc). This object should be able to be
-   instantiated when needed, used, and then thrown away when no longer needed
-   (i.e. user navigates to a different page), so that no state is
-   accidentally transferred between pages.
-
-2. For utility methods, these should be abstracted into different classes/modules.
-
-    1. Methods that deal with queries on the data most often belong on 
-       [Domain Object Classes]({{ site.baseurl }}/architecture/domain-objects) Domain Object classes 
-       (which would represent, for example, a single User, Account, CalendarEvent, 
-       etc.)<br><br>
-       For instance, instead of something like `XyzService.isUserEnabled(user)`, 
-       should instead be: `user.isEnabled()`<br><br>

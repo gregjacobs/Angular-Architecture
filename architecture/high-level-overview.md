@@ -39,7 +39,7 @@ components.
 Responsibilities include:
 
 1. Accesses data (from network requests, local storage, etc.), and returns 
-   [domain objects]({{ site.baseurl }}/architecture/domain-objects/) (models and collections) to 
+   [Models and Collections]({{ site.baseurl }}/architecture/models-and-collections/) to 
    represent it.
 2. Provides a library of utility functionality for working with, transforming, 
    or otherwise processing your data and functionality.
