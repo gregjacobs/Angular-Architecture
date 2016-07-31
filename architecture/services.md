@@ -39,7 +39,9 @@ angular.module( 'heroes' ).factory( 'HeroesService', function( $http, HeroesRead
     
     // Public API
     return {
-        loadHeroes : loadHeroes
+        loadHeroes : loadHeroes,
+        loadHero   : loadHero,
+        saveHero   : saveHero
     };
     
     
@@ -52,9 +54,44 @@ angular.module( 'heroes' ).factory( 'HeroesService', function( $http, HeroesRead
     function loadHeroes() {
         return $http( { url: '/path/to/heroes' } ).then(
             function onSuccess( response ) {
-               return HeroesReader.read( response.data );
+               return HeroesReader.readHeroes( response.data );
             }
         );
+    }
+    
+    
+    /**
+     * Loads a Hero by ID.
+     *
+     * @param {Number} heroId The ID of the hero to load.
+     * @return {Promise} A promise which is resolved with a {@link Hero} object
+     *   if found, or `null` if not. The promise is rejected if an error occurs.
+     */
+    function loadHero( heroId ) {
+        return $http( { url: '/path/to/hero/' + heroId } ).then( 
+            function onSuccess( response ) {
+                return HeroesReader.readHero( response.data );
+            }
+        } );
+    }
+    
+    
+    /**
+     * Saves a Hero to the server.
+     *
+     * @param {Hero} hero The Hero to save.
+     * @return {Promise} A promise which is resolved with an updated {@link Hero}
+     *   when the operation is complete, or is rejected if an error occurs.
+     */
+    function saveHero( hero ) {
+        var data = HeroWriter.write( hero );
+        
+        return $http( { 
+            url: '/path/to/hero' + ( !hero.id ? '' : '/' + hero.id ),
+            method: !hero.id ? 'POST' : 'PUT'
+        } ).then( function( response ) {
+            return HeroesReader.readHero( response.data );
+        } );
     }
     
 } );
@@ -99,15 +136,17 @@ Example HeroesReader:
 angular.module( 'heroes' ).factory( 'HeroesReader', function() {
     'use strict';
     
+    // Public API
     return {
-        read : read
+        readHeroes : readHeroes,
+        readHero   : readHero
     };
     
     
     /**
      * Reads the server response data for heroes.
      *
-     * Example server data response:
+     * Example server response data:
      * 
      *     [
      *          { id: 11, name: 'Mr. Nice', lastBattle: '2016-05-22T14:22:01' },
@@ -115,19 +154,25 @@ angular.module( 'heroes' ).factory( 'HeroesReader', function() {
      *          { id: 13, name: 'Bombasto', lastBattle: '2016-04-10T18:00:52' }
      *     ]
      *
+     * @param {Object[]} heroObjs The array of 'hero' objects from the server.
      * @return {Heroes[]}
      */
-    function read( data ) {
-        return _.map( data, createHero );
+    function read( heroObjs ) {
+        return _.map( heroObjs, readHero );
     }
     
     
     /**
-     * @private
+     * Reads the server response data for a single Hero.
+     * 
+     * Example server response data:
+     *
+     *     { id: 11, name: 'Mr. Nice', lastBattle: '2016-05-22T14:22:01' }
+     *
      * @param {Object} heroObj The 'hero' object from the server.
      * @return {Hero} A Hero instance.
      */
-    function createHero( heroObj ) {
+    function readHero( heroObj ) {
         return new Hero( { 
             id         : heroObj.id,
             name       : heroObj.name,
@@ -163,8 +208,8 @@ angular.module( 'heroes' ).factory( 'HeroesReader', function() {
 #### Hero class
 
 Here's an example of a "class" in ES5, but if you're able, use ES6 classes and
-[Babel](https://babeljs.io) to transpile them into ES5. (Or, even better, use
-[TypeScript](https://www.typescriptlang.org).)
+[Babel](https://babeljs.io) to transpile them into ES5. Or even better, use
+[TypeScript](https://www.typescriptlang.org).
 
 ```js
 angular.module( 'heroes' ).factory( 'Hero', function() {
@@ -202,6 +247,8 @@ angular.module( 'heroes' ).factory( 'Hero', function() {
 See [Models and Collections]({{ site.baseurl }}/architecture/domain-objects) 
 for more details.
 
+For how to test, see [Testing Services]({{ site.baseurl }}/testing/services).
+
 <b>(Work-in-progress)</b><br>
 TODO: Additional points to cover:
 
@@ -220,7 +267,3 @@ TODO: Additional points to cover:
        etc.)<br><br>
        For instance, instead of something like `XyzService.isUserEnabled(user)`, 
        should instead be: `user.isEnabled()`<br><br>
-
-3. Create domain objects: Models and Collections. Backbone.js has this right. 
-   Example: a `UserCollection` might have methods for client-side filtering
-   based on first/last names, or other properties. 
