@@ -13,6 +13,16 @@ Most services are used to pull data from a remote server (which will be the
 topic of this article), but services may be used for many other things as 
 well (logging, etc.)
 
+- _Why put data access in a service rather than on a page?:_ We want to be 
+  able to retrieve remote/stored data from a single place that can be 
+  called from multiple pages. Also, if our data source changes, then we
+  only need to make that change in one place.
+  
+- _Why not simply put $http calls on my pages?:_ We will be doing 
+  post-processing and translation of raw HTTP response data, and this will 
+  not be the responsibility of our page controllers. We want to keep our 
+  page controllers as light as possible.
+
 One thing services should generally **not** do however is modify the DOM. 
 (One notable exception though is to display an application-level alert 
 modal, for instance.)
