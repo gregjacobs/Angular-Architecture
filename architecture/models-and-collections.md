@@ -56,3 +56,4 @@ And its usage once you have an instance:
   without duplicating code.
 
  
+Next Article: [Pages]({{ site.baseurl }}/architecture/pages/)

@@ -36,3 +36,5 @@ storage, etc.), and returns [Models and Collections]({{ site.baseurl }}/architec
 which are passed to your view components. 
 
 {% include diagrams/service.md %}
+
+Next Article: [Services]({{ site.baseurl }}/architecture/services/)

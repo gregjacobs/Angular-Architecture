@@ -153,7 +153,10 @@ Example HeroesReader:
 
 {% include hero-model.md %}
 
-See [Models and Collections]({{ site.baseurl }}/architecture/models-and-collections) 
+See the next article ([Models and Collections]({{ site.baseurl }}/architecture/models-and-collections)) 
 for more details.
 
 For how to test, see [Testing Services]({{ site.baseurl }}/testing/services).
+
+
+Next Article: [Models and Collections]({{ site.baseurl }}/architecture/models-and-collections/)
