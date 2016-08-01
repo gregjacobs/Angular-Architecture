@@ -23,8 +23,9 @@ reusing any existing infrastructure and components when needed.
 Hop right in: [High Level Overview]({{ site.baseurl }}/architecture/high-level-overview)
 
 <br>
-<strong>Note:</strong> This guide has been updated with all examples to match the Angular 2.x 
-[Tour of Heroes](https://angular.io/docs/ts/latest/tutorial/) Tutorial, which
-hopefully will assist in drawing parallels between the two versions. Even though 
-the guides on this site are based on Angular 1.x, many if not all of the same 
-high-level concepts are now taught for Angular 2.x in the [Angular 2.x Developer Guide](https://angular.io/docs/ts/latest/guide/).
+<strong>Note:</strong> This guide is in the process of being updated with all 
+examples to match the Angular 2.x [Tour of Heroes](https://angular.io/docs/ts/latest/tutorial/) 
+tutorial, which will hopefully assist in drawing parallels between the two 
+versions of Angular. Even though the guides on this site are based on Angular 
+1.x, essentially all of the same high-level concepts are now taught for Angular 
+2.x in the [Angular 2.x Developer Guide](https://angular.io/docs/ts/latest/guide/).
