@@ -1,4 +1,5 @@
 # Angular-Guides
-Advanced Architecture and High-Level Guides for Large AngularJS App Development
+Advanced architecture and high-level guides for creating robust and 
+maintainable large-scale AngularJS applications.
 
-[http://gregjacobs.github.io/Angular-Guides/](http://gregjacobs.github.io/Angular-Guides/)
+See the site here: [http://gregjacobs.github.io/Angular-Architecture/](http://gregjacobs.github.io/Angular-Architecture/)
