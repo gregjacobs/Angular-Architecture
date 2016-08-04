@@ -293,3 +293,5 @@ describe( 'HeroesService', function() {
 
 } );
 ```
+
+Next Article: [Testing Components]({{ site.baseurl }}/testing/components)
