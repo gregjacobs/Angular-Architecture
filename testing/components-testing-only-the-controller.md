@@ -1,15 +1,16 @@
 ---
-title: "Testing: Components - The Old Way of Doing Things"
+title: "Testing: Components - Example of Problem with Testing Only the Controller"
 layout: page-with-nav
-permalink: /testing/components-the-old-way-of-doing-things/
+permalink: /testing/components-example-of-problem-with-only-testing-the-controller/
 comments: true
 ---
 
 As part of the [Testing Components]({{ site.baseurl }}/testing/components/) article, this is to
 demonstrate the problem with controller-only testing in a very short example. 
+
 Here is a test for a component that only asserts against a controller property,
-rather than testing the component as a whole. The component itself here is 
-broken, but the test passes:
+rather than testing the component as a whole. **The component itself presented
+here is broken, but the test passes**:
 
 *app-display-exclamation-text.js*
 
@@ -29,7 +30,7 @@ angular.module( 'myApp' ).directive( 'appDisplayExclamationText', function() {
 		    text : '=',
 		},
 
-		templateUrl  : 'components/app-display-text/app-display-text.html',
+		templateUrl  : 'app-display-exclamation-text.html',
 		controller   : 'AppDisplayTextCtrl',
 		controllerAs : 'ctrl'
 	};
@@ -53,11 +54,13 @@ function (  $scope ) {
 *app-display-exclamation-text.html*
 
 ```html
-<div class="app-display-exclamation-text">{% raw %}{{ ctrl.txt }}{% endraw %}</div>
+<div>{% raw %}{{ ctrl.txt }}{% endraw %}</div>
 ```
 
+Do you see the issue yet?
 
-And the test that only checks the controller's (or `$scope`'s) properties:
+Here is the test that only checks the controller's (or `$scope`'s) 
+properties:
 
 ```javascript
 describe( 'AppErrorBoxCtrl', function() {
@@ -92,7 +95,8 @@ describe( 'AppErrorBoxCtrl', function() {
 } );
 ```
 
-Here, this test will pass, but the component is broken because its HTML template
-referenced `ctrl.txt` instead of `ctrl.text`.
+Here, _**this test will pass**_, but the component is broken because its HTML 
+template referenced `ctrl.txt` instead of `ctrl.text`.
 
-See the [Testing Components]({{ site.baseurl }}/testing/components) article for a better way.
+See the [Testing Components]({{ site.baseurl }}/testing/components) article for 
+a better way of writing component tests.
