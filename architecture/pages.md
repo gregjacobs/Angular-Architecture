@@ -50,7 +50,7 @@ Directory structure:
 *app.js*
 
 {% highlight javascript %}
-angular.module( 'myApp' ).config( [ '$routeProvider', function( routeProvider ) {
+angular.module( 'heroes' ).config( [ '$routeProvider', function( routeProvider ) {
     'use strict';
     
     $routeProvider

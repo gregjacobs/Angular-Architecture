@@ -1,4 +1,4 @@
-angular.module( 'myApp' ).component( 'myHeroesList', {
+angular.module( 'heroes' ).component( 'myHeroesList', {
 	bindings : {
 		heroes       : '<',
 		onHeroSelect : '&'

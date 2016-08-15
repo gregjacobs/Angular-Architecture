@@ -1,4 +1,4 @@
-angular.module( 'myApp' ).component( 'myHeroesList', {
+angular.module( 'heroes' ).component( 'myHeroesList', {
 	templateUrl : 'heroes-list-page/my-heroes-list-page.html',
 	controller  : MyHeroesListPageController
 } );

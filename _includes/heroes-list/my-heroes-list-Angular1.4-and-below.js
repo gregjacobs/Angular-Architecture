@@ -1,4 +1,4 @@
-angular.module( 'myApp' ).component( 'myHeroesList', function() {
+angular.module( 'heroes' ).component( 'myHeroesList', function() {
 	'use strict';
 
 	return {
@@ -19,7 +19,7 @@ angular.module( 'myApp' ).component( 'myHeroesList', function() {
 } );
 
 
-angular.module( 'myApp' ).controller( 'AppErrorBoxCtrl', [ function() {
+angular.module( 'heroes' ).controller( 'AppErrorBoxCtrl', [ function() {
 	'use strict';
 
 	var ctrl = this;
