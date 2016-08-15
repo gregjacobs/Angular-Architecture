@@ -4,7 +4,7 @@ angular.module( 'myApp' ).component( 'myHeroesList', {
 		onHeroSelect : '&'
 	},
 
-	templateUrl : 'my-heroes-list.html',
+	templateUrl : 'heroes-list/my-heroes-list.html',
 	controller  : MyHeroesListController
 } );
 

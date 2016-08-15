@@ -1,0 +1,12 @@
+<h1>My Heroes</h1>
+
+<my-loading-spinner
+	ng-if="$ctrl.pageState === $ctrl.PageState.LOADING"></my-loading-spinner>
+
+<my-heroes-list
+	ng-if="$ctrl.pageState === $ctrl.PageState.LOADED"
+	heroes="$ctrl.heroes"></my-heroes-list>
+
+<div ng-if="$ctrl.pageState === $ctrl.PageState.ERROR">
+	An error occurred: {% raw %}{{ $ctrl.error }}{% endraw %}
+</div>
