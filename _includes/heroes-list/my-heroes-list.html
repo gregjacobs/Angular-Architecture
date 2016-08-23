@@ -4,6 +4,7 @@
 	    ng-class="{ 'heroes-list__hero--selected': hero === selectedHero }"
 	    ng-click="$ctrl.selectHero( hero )">
 
-		<span class="heroes-list__badge">{{hero.id}}</span> {{hero.name}}
+		<span class="heroes-list__id">{{hero.id}}</span>
+		<span class="heroes-list__name">{{hero.name}}</span>
 	</li>
 </ul>

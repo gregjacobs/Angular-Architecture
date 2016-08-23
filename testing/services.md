@@ -26,7 +26,7 @@ it.
 Recall that our `HeroesService` from the [services]({{ site.baseurl }}/architecture/services)
 guide looks like this:
 
-{% include heroes-service.md %}
+{% include heroes-service/heroes-service.md %}
 
 And our first test of the `loadHeroes()` method:
 
@@ -53,16 +53,16 @@ describe( 'HeroesService', function() {
         successFn      = jasmine.createSpy( 'successFn' );
         errorFn        = jasmine.createSpy( 'errorFn' );
     } ) );
-    
-    
-{% include heroes-service-test-expect-hero.md %}
 
     
     describe( 'loadHeroes()', function() {
     
-{% include heroes-service-test-load-heroes-success.md %}
+{% include heroes-service/heroes-service-test-load-heroes-success.md %}
     
     } );
+    
+    
+{% include heroes-service/heroes-service-test-expect-hero.md %}
 
 } );
 ```
@@ -111,21 +111,7 @@ For more information on `$httpBackend`, see: [https://docs.angularjs.org/api/ngM
 server can provide to us for heroes, which can be used in many tests. Example: 
 
 ```javascript
-angular.module( 'heroes' ).factory( 'HeroesTestData', function() {
-
-    var mrNice   = { id: 11, name: 'Mr. Nice', lastBattle: '2016-04-22T14:22:01' },
-        narco    = { id: 12, name: 'Narco',    lastBattle: '2016-02-01T08:52:27' },
-        bombasto = { id: 13, name: 'Bombasto', lastBattle: '2016-05-10T18:00:52' };
-      
-    return {
-        mrNice   : mrNice,
-        narco    : narco,
-        bombasto : bombasto,
-        
-        heroes   : [ mrNice, narco, bombasto ]
-    };
-
-} );
+{% include heroes-service/HeroesTestData.js %}
 ```
 
 This test data will be used not only for the `HeroesService` tests, but also for 
@@ -161,14 +147,11 @@ describe( 'HeroesService', function() {
         successFn      = jasmine.createSpy( 'successFn' );
         errorFn        = jasmine.createSpy( 'errorFn' );
     } ) );
-    
-    
-{% include heroes-service-test-expect-hero.md %}
 
     
     describe( 'loadHeroes()', function() {
     
-{% include heroes-service-test-load-heroes-success.md %}
+{% include heroes-service/heroes-service-test-load-heroes-success.md %}
 
 
         it( 'should return a promise that should reject if an error occurs', function() {
@@ -290,6 +273,9 @@ describe( 'HeroesService', function() {
         } );
     
     } );
+    
+    
+{% include heroes-service/heroes-service-test-expect-hero.md %}
 
 } );
 ```

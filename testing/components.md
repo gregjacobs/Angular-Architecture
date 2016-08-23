@@ -5,168 +5,92 @@ permalink: /testing/components/
 comments: true
 ---
 
-Components are what make up the more complex "view pieces" of your app (more
-complex than an HTML tag or two), which when pieced together, form pages of your 
-app. (See [Components]({{ site.baseurl }}/architecture/components/) and 
-[Pages]({{ site.baseurl }}/architecture/pages/) articles for more details.)
+For testing [components]({{ site.baseurl }}/architecture/components/), 
+we'll take an approach that involves asserting against the DOM of a 
+component (the "output"), rather than simply checking properties of the 
+controller. This is a departure from the Angular-recommended approach to 
+testing (which can be viewed [here](https://docs.angularjs.org/guide/unit-testing)), 
+and also blurs the lines between unit+integration testing, and e2e 
+(end-to-end) testing. 
 
+The reasons for this are described below.
 
-## Intro: Why It's Not Enough To Test The Scope/Controller Alone
+## Intro: Why It's Not Enough To Test The Controller Alone
 
-Components are implemented in Angular 1.x as directives. These 
-directives have 1) a controller and 2) an HTML template. Many testing 
-guides (including the [Angular Unit Testing Guide](https://docs.angularjs.org/guide/unit-testing)) 
-recommend that your tests check against properties of the controller 
-for your expectations, but this is not enough since it is only half
-the story (the other half being the HTML template). 
+Components are a combination of 1) a _controller_, and 2) an _HTML 
+template_. Many testing guides (including the [Angular Unit Testing Guide](https://docs.angularjs.org/guide/unit-testing)) 
+recommend that your tests assert against properties of the controller, 
+but this is not enough since it is only half the story. A few reasons:
 
-* You can see an example of a controller-only test that passes for a 
-  broken component in the [Components - Example of Problem with Testing Only the Controller]({{ site.baseurl }}/testing/components-example-of-problem-with-only-testing-the-controller/)
-  article.
-  
-* For a more in-depth analysis of some of the other pitfalls that can be 
-  run into with controller-only testing, see the [Components - Why It's Not Enough to Only Test the Controller]({{ site.baseurl }}/testing/components-why-its-not-enough-to-only-test-the-controller/)
+1. It is very easy for the HTML to become out-of-sync from the 
+   controller's properties. This gives you the possibility of tests that
+   can pass for what is ultimately a broken component. See the 
+   example in [Components - Example of Problem with Testing Only the Controller]({{ site.baseurl }}/testing/components-example-of-problem-with-only-testing-the-controller/).
+   
+2. There are many cases where changes to the HTML template may prevent 
+   the user from seeing what he/she is supposed to see. For an in-depth 
+   analysis of these cases, see the [Components - Why It's Not Enough to Only Test the Controller]({{ site.baseurl }}/testing/components-why-its-not-enough-to-only-test-the-controller/)
+   article.
 
-
-The solution to testing the controller + html together? Instead of 
+The solution to these problems is to test the controller + the html 
+together by actually instantiating the component itself. Instead of 
 asserting against `$scope`/controller properties, instantiate the entire
 component and assert against the DOM. 
 
 
-## Example Component
+## Example Component Tests
 
-Following on the simple example component in the [Components]({{ site.baseurl }}/architecture/components/)
-article for an app's standard "error" box, we'll test it here using this
-technique.
+We'll continue with the `<ms-heroes-list>` component from the 
+[Components]({{ site.baseurl }}/architecture/components/) article for 
+our presentation of testing a component. Here's what our component looks
+like, and its code: 
 
-A refresher on the code of our `<app-error-box>` component:
+<img src="{{ site.baseurl }}/images/heroes-list-1-cropped.png" class="example-frame" alt="Heroes List" title="Heroes List">
 
-*app-error-box.js*
+*my-heroes-list.js*
 
 ```javascript
-{% include app-error-box/app-error-box.js %}
+{% include heroes-list/my-heroes-list.js %}
 ```
 
 
-*app-error-box.html*
+*my-heroes-list.html*
 
 ```html
-{% include app-error-box/app-error-box.html %}
+{% include heroes-list/my-heroes-list.html %}
 ```
 
 
 And finally, how we might instantiate this component from a page:
 
 ```html
-{% include app-error-box/app-error-box-usage.html %}
+{% include heroes-list/my-heroes-list-usage.html %}
 ```
 
 
-## Testing This Component via its Public Interface and Observing the DOM
+## Testing the Component via its Component Interface
 
 In order to test this component, we want to test it through its *public 
-interface*. This is a common theme in unit testing: test through the public 
-interface because it doesn't matter to clients of your component if the 
-"behind-the-scenes" details change, as long as they get what they expect. This 
-is also known as "black box testing" - testing without relying on the internal
-details of the component.
+component interface*. This means that we'll be populating the component 
+with data, and listening to its events in the same way that the rest of 
+your app will. We'll then observe the DOM output of the component in 
+order to assert that the component's behavior is correct.
 
-In the case of Angular components, we want to test them via their public 
-interface by first instantiating the component, and feeding data to its 
-attributes. 
-
-So how do we set this up? Here's a basic outline for your test file, with a few
-initial tests:
+To do this, we'll be instantiating the component using the `$compile`
+service, and providing data to its attributes. See below.
 
 <div class="aside mb20">
-    Note: You will be probably be wondering what the "TestWrapper" is when 
-    reading this test file. We will be going into that in detail later on, but 
-    for now know that it simply wraps and represents the component for the 
-    tests, providing methods for common expectations, and actions that user may 
-    take on the component.
+    Note: You will be probably be wondering what the "TestWrapper" is 
+    when reading this test file. We will be going into that in detail 
+    later on, but for now know that it simply represents the instantiated
+    component for the tests, and provides methods for common expectations 
+    and actions that the user may take on the component.
 </div>
 
-*components/app-error-box/app-error-box.spec.js*
+*my-heroes-list.spec.js*
 
 {% highlight javascript %}
-describe( 'app-error-box', function() {
-
-    var $compile,
-        $scope,  // our "outer" scope - the one that will feed the component's inputs
-        AppErrorBoxTestWrapper;  // wrapper for testing this component - more on this later
-
-    beforeEach( module( 'myApp' ) );
-    
-    beforeEach( function( inject( $injector ) {
-        $compile               = $injector.get( '$compile' );
-        $scope                 = $injector.get( '$rootScope' ).$new();
-        AppErrorBoxTestWrapper = $injector.get( 'AppErrorBoxTestWrapper' );
-    } ) );
-    
-    
-    function createComponent() {
-        var $el = $compile( [ 
-            '<app-error-box',
-                ' header="header"',
-                ' text="text"',
-                ' on-retry="onRetry()">',
-            '</app-error-box>'
-        ].join( '' ) )( $scope );
-        
-        // fully initialize the component by triggering $watch handlers, 
-        // flushing values to the DOM, etc.
-        $scope.$apply();  
-        
-        // wrap the component in our TestWrapper for easy/reusable 
-        // testing of the component
-        return new AppErrorBoxTestWrapper( $el );   
-    }
-    
-    
-    it( 'should initially display the provided `header` and `text`, and ' + 
-        'default the retry btn label to "Retry"', 
-    function() {
-        $scope.header = 'My Header';  // setting our scope properties here will bind
-        $scope.text = 'My Text';      // them to our component when it is instantiated
-        var appErrorBox = createComponent();
-        
-        appErrorBox.expectHeader( 'My Header' );
-        appErrorBox.expectText( 'My Text' );
-        appErrorBox.expectRetryBtnLabel( 'Retry' );
-    } );
-    
-    
-    it( 'should update the displayed `header` and `text` when they change', 
-    function() {
-        $scope.header = 'Header 1';
-        $scope.text = 'Text 1';
-        var appErrorBox = createComponent();
-        
-        appErrorBox.expectState( 'Header 1', 'Text 1', 'Retry' );  // initial condition
-            // Note: `expectState()` is a shorthand method for the 3 separate expectations 
-        
-        // Now update the properties
-        $scope.header = 'Header 2';
-        $scope.text = 'Text 2';
-        $scope.$apply();
-        
-        appErrorBox.expectState( 'Header 2', 'Text 2', 'Retry' );
-    } );
-    
-    
-    it( 'should call the `on-retry` expression when the "Retry" button ' +
-        'is clicked', 
-    function() {
-        $scope.onRetry = jasmine.createSpy( 'onRetry' );
-        var appErrorBox = createComponent();
-            
-        expect( $scope.onRetry ).not.toHaveBeenCalled();  // not yet
-    
-        appErrorBox.clickRetryBtn();
-        expect( $scope.onRetry ).toHaveBeenCalled();
-    } );
-
-} );
+{% include heroes-list/my-heroes-list.spec.js %}
 {% endhighlight %}
 
 
@@ -192,77 +116,26 @@ So what did we do here?
 
 
 
+* _Why Test Only the Public Interface?_: This is a common theme in unit 
+testing: test through the public interface because it doesn't matter to 
+the component's clients if the "behind-the-scenes" details of the 
+component change, as long as the client still gets what they expect. This 
+is also known as "black box testing" - testing without relying on the internal
+details of the component.
+
 ## The Component's TestWrapper
 
-You were probably wondering what this "TestWrapper" was in the above tests. 
+You were probably wondering what this "TestWrapper" was in the above 
+tests. 
 
-The TestWrapper class is used to encapsulate knowledge of the particular 
-component's HTML markup, and provide methods for common expectations and user 
-action simulation in order to easily test the component. 
+The TestWrapper is used to encapsulate knowledge of the particular 
+component's HTML markup, and provide methods for common expectations and 
+user action simulation in order to easily test the component. 
 
-*AppErrorBoxTestWrapper.js*
+*MyHeroesListTestWrapper.js*
 
 ```javascript
-angular.module( 'myApp' ).factory( 'AppErrorBoxTestWrapper', [ function() {
-    'use strict';
-
-    var AppErrorBoxTestWrapper = function( $el ) {
-        this.$el = $el;
-    }
-    
-    AppErrorBoxTestWrapper.prototype = {
-    
-        // May want to put this method into either a service or base class 
-        // (or inherited prototype object if going that route)
-        findElem : function( selector ) {
-            return angular.element( this.$el[ 0 ].querySelectorAll( selector ) );
-        }
-    
-        // Methods to Retrieve DOM elements (usually treat as private/protected)
-        getHeaderEl   : function() { return this.findElem( '.app-error-box__header' ); },
-        getTextEl     : function() { return this.findElem( '.app-error-box__text' ); },
-        getRetryBtnEl : function() { return this.findElem( '.app-error-box__retryBtn' ); },
-    
-        // Methods to retrieve the inner text of the elements (again, usually treat as private/protected)
-        getHeader     : function() { return this.getHeaderEl().text(); },
-        getText       : function() { return this.getTextEl().text(); },
-        getRetryBtnLabel : function() { return this.getRetryBtnEl().text().trim(); },  // trim because we put the text on a new line in the template
-     
-     
-        // Common Expectations
-        
-        expectHeader : function( expectedHeader ) {
-            expect( this.getHeader() ).toBe( expectedHeader );
-        },
-        
-        expectText : function( expectedText ) {
-            expect( this.getText() ).toBe( expectedText );
-        },
-        
-        expectRetryBtnLabel : function( expectedRetryBtnLabel ) {
-            expect( this.getRetryBtnLabel() ).toBe( expectedRetryBtnLabel );
-        },
-        
-        // Convenient Combination Method
-        expectState : function( header, text, retryBtnLabel ) {
-            this.expectHeader( header );
-            this.expectText( text );
-            this.expectRetryBtnLabel( retryBtnLabel );
-        },
-        
-        
-        // User Interaction Simulation Methods
-        
-        clickRetryBtn : function() {
-            this.getRetryBtnEl().triggerHandler( 'click' );
-        }
-        
-    };
-    
-    
-    return AppErrorBoxTestWrapper;
-    
-} ] );
+{% include heroes-list/MyHeroesListTestWrapper.js %}
 ```
 
 So what do we have here? 

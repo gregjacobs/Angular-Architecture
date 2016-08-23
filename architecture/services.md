@@ -43,7 +43,7 @@ HTTP responses into known objects that the app can consume. More on that later.
 Generally, use the [factory](https://docs.angularjs.org/guide/providers#factory-recipe)
 recipe to create singleton services.
 
-{% include heroes-service.md %}
+{% include heroes-service/heroes-service.md %}
 
 * _Why `loadHeroes()` instead of `getHeroes()`?_: "get" would make the method 
   sound like it's going to return a usable value rather than an async promise, 
@@ -70,7 +70,7 @@ your data models.
 
 Example HeroesReader:
 
-{% include heroes-reader.md %}
+{% include heroes-service/heroes-reader.md %}
 
 
 * _Why do this?_: A Reader gives you the perfect place to parse server
@@ -96,9 +96,11 @@ Example HeroesReader:
 
 #### Hero Model
 
-{% include hero-model-intro.md %}
+{% include heroes-service/hero-model-intro.md %}
 
-{% include hero-model.md %}
+```javascript
+{% include heroes-service/hero-model.js %}
+```
 
 See the next article ([Models and Collections]({{ site.baseurl }}/architecture/models-and-collections)) 
 for more details.

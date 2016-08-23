@@ -1,5 +1,5 @@
 ---
-title: "Testing Best Practices: Mock as Very Little As Possible"
+title: "Testing Best Practices: Mock as Little As Possible"
 layout: page-with-nav
 permalink: /testing/mocking/
 comments: true

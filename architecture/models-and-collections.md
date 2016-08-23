@@ -18,13 +18,15 @@ classes to add functionality on the "array of models" level. More on that later.
 
 #### Hero Model
 
-{% include hero-model-intro.md %}
+{% include heroes-service/hero-model-intro.md %}
 
-{% include hero-model.md %}
+```javascript
+{% include heroes-service/hero-model.js %}
+```
 
 And its usage once you have an instance:
 
-{% include hero-model-usage.md %}
+{% include heroes-service/hero-model-usage.md %}
 
 
 #### HeroesCollection
@@ -36,11 +38,11 @@ your data models.
 
 Here is an example to demonstrate the technique:
 
-{% include heroes-collection.md %}
+{% include heroes-service/heroes-collection.md %}
 
 And its usage once you have an instance:
 
-{% include heroes-collection-usage.md %}
+{% include heroes-service/heroes-collection-usage.md %}
 
 #### Additional Points
 
